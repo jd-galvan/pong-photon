@@ -1,8 +1,21 @@
-# Pong (2D)
+# Pong Multiplayer - Unity (Photon Fusion)
 
-> Pong is a table tennis-themed arcade video game, featuring simple two-dimensional graphics, manufactured by Atari and originally released in 1972. It was one of the earliest arcade video games; it was created by Allan Alcorn as a training exercise assigned to him by Atari co-founder Nolan Bushnell. Bushnell based the game's concept on an electronic ping-pong game included in the Magnavox Odyssey, the first home video game console.
+## 🎮 Descripción
+Este es un remake del clásico Pong desarrollado en Unity, con soporte multijugador en línea gracias a Photon Fusion. Diseñado para dos jugadores, la partida se desarrolla en tiempo real y el primer jugador que alcanza 5 puntos gana el juego.
 
-- **Topics**: Physics, AI
-- **Version**: Unity 2019.4 (LTS)
-- [**Download**](https://github.com/zigurous/unity-pong-tutorial/archive/refs/heads/main.zip)
-- [**Watch Video**](https://youtu.be/AcpaYq0ihaM)
+Este proyecto tomó como base el proyecto [Unity Pong Tutorial](https://github.com/zigurous/unity-pong-tutorial).
+
+## 🚀 Características
+- 🏓 Juego de Pong clásico.
+- 🌐 Multijugador en línea con Photon Fusion.
+- 🎮 Controles: Flechas direccionales (arriba y abajo).
+- 🏆 Mecánica de puntuación: el primero en llegar a 5 puntos gana.
+
+## 🛠️ Tecnologías utilizadas
+- **Unity** (versión recomendada: 2022.3.45f)
+- **Photon Fusion** para el modo multijugador.
+- **C#** para la lógica del juego.
+
+## 📡 Conexión en Línea
+- Asegúrate de que ambos jugadores estén conectados a Internet.
+- Uno de los jugadores se une como Host y el otro se une como cliente.
