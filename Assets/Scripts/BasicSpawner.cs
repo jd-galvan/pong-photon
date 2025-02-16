@@ -41,13 +41,31 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnGUI()
     {
-      if (_runner == null) {
-        if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
-          StartGame(GameMode.Host);
-        if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
-          StartGame(GameMode.Client);
-      }
+        if (_runner == null)
+        {
+            float buttonWidth = 200;
+            float buttonHeight = 40;
+            float spacing = 10; // Espacio entre botones
+            float offsetY = 100; // Desplazamiento hacia abajo en píxeles
+
+            // Posición centralizada
+            float centerX = (Screen.width - buttonWidth) / 2;
+            float centerY = (Screen.height - (buttonHeight * 2 + spacing)) / 2 + offsetY;
+
+            // Botón Host
+            if (GUI.Button(new Rect(centerX, centerY, buttonWidth, buttonHeight), "Host"))
+            {
+                StartGame(GameMode.Host);
+            }
+
+            // Botón Join (Debajo del botón Host)
+            if (GUI.Button(new Rect(centerX, centerY + buttonHeight + spacing, buttonWidth, buttonHeight), "Join"))
+            {
+                StartGame(GameMode.Client);
+            }
+        }
     }
+
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) {
         if (runner.IsServer) {
