@@ -1,3 +1,6 @@
+/// <summary>
+/// Administrador de generación de jugadores en la red utilizando Fusion.
+/// </summary>
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,26 +11,40 @@ using UnityEngine;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    private NetworkRunner _runner; //Atributo interno privado donde descansa el NetworkRunner
+    /// <summary>
+    /// Instancia del NetworkRunner para manejar la conexión de red.
+    /// </summary>
+    private NetworkRunner _runner;
+
+    /// <summary>
+    /// Prefab de red para los jugadores.
+    /// </summary>
     [SerializeField] private NetworkPrefabRef _playerPrefab;
+
+    /// <summary>
+    /// Diccionario que almacena los personajes generados asociados a cada jugador.
+    /// </summary>
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
-    async void StartGame(GameMode mode) {
-        if (_runner != null) {
+    /// <summary>
+    /// Inicia un nuevo juego en el modo seleccionado.
+    /// </summary>
+    /// <param name="mode">Modo de juego (Host o Cliente).</param>
+    async void StartGame(GameMode mode)
+    {
+        if (_runner != null)
+        {
             Debug.LogWarning("El juego ya está en ejecución.");
             return;
         }
 
-        // Crear el NetworkRunner y establecer que proveerá input
         _runner = gameObject.AddComponent<NetworkRunner>();
         _runner.ProvideInput = true;
 
-        // Obtener la escena actual
         SceneRef scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
         NetworkSceneInfo sceneInfo = new NetworkSceneInfo();
         if (scene.IsValid) sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
 
-        // Iniciar el juego o unirse a una sesión
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
@@ -39,44 +56,49 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log($"Juego iniciado como: {mode}");
     }
 
+    /// <summary>
+    /// Muestra botones en la interfaz para iniciar el juego como Host o Cliente.
+    /// </summary>
     private void OnGUI()
     {
-      if (_runner == null) {
-        if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
-          StartGame(GameMode.Host);
-        if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
-          StartGame(GameMode.Client);
-      }
+        if (_runner == null)
+        {
+            if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
+                StartGame(GameMode.Host);
+            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
+                StartGame(GameMode.Client);
+        }
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) {
-        if (runner.IsServer) {
-            // Obtener el ancho de la pantalla en unidades del mundo
-            float screenHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
-
-            // Determinar si el jugador es el primer jugador o el segundo
-            bool isHost = _spawnedCharacters.Count == 0;
-            float paddleXPosition = isHost ? -8 : 8; // Izquierda para Host, Derecha para Cliente
-
-            // Posición de la paleta
+    /// <summary>
+    /// Evento llamado cuando un jugador se une al juego.
+    /// </summary>
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        if (runner.IsServer)
+        {
+            float paddleXPosition = _spawnedCharacters.Count == 0 ? -8 : 8;
             Vector2 spawnPosition = new Vector2(paddleXPosition, 0);
-
-            // Instanciar la paleta en la posición correcta
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-
-            // Guardar referencia a la paleta
             _spawnedCharacters.Add(player, networkPlayerObject);
         }
     }
 
-
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) {
-      if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject)) {
-        runner.Despawn(networkObject);
-        _spawnedCharacters.Remove(player);
-      }
+    /// <summary>
+    /// Evento llamado cuando un jugador abandona la partida.
+    /// </summary>
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
+        {
+            runner.Despawn(networkObject);
+            _spawnedCharacters.Remove(player);
+        }
     }
 
+    /// <summary>
+    /// Captura la entrada del usuario y la envía a la red.
+    /// </summary>
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         Vector2 moveInput = Vector2.zero;
@@ -98,8 +120,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }
     public void OnDisconnectedFromServer(NetworkRunner runner) { }
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
-    { }
+    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
@@ -108,11 +129,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
     public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) {}
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) {}
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) {}
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key,
-    ArraySegment<byte> data) {}
-    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float
-    progress) {}
+    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
+    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
+    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
 }
