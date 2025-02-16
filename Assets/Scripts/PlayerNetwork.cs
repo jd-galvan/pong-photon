@@ -7,7 +7,9 @@ public class PlayerNetwork : NetworkBehaviour
 {
     public float speed = 5f; // Velocidad de movimiento
     private Rigidbody2D rb;
-    private Transform paddleTransform; // Referencia a la paleta
+
+    public float upperLimit = 4f; // Límite superior de la cancha
+    public float lowerLimit = -4f; // Límite inferior de la cancha
 
     public override void Spawned()
     {
@@ -18,15 +20,23 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (rb == null)
         {
-          return;
-        } 
+            return;
+        }
 
         if (GetInput(out NetworkInputData inputData))
         {
-          //Debug.Log("Ingreso a este metodo");
-          // Movimiento en el eje Y (Solo hacia arriba y abajo)
-          Vector2 movement = new Vector2(0, inputData.moveDirection.y * speed);
-          rb.velocity = movement;
+            // Movimiento en el eje Y
+            Vector2 movement = new Vector2(0, inputData.moveDirection.y * speed);
+            rb.velocity = movement;
+
+            // Obtener la nueva posición del Rigidbody
+            Vector2 newPosition = rb.position;
+
+            // Limitar la posición dentro del rango permitido
+            newPosition.y = Mathf.Clamp(newPosition.y, lowerLimit, upperLimit);
+
+            // Aplicar la posición corregida
+            rb.position = newPosition;
         }
     }
 }
