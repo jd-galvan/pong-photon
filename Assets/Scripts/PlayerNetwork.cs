@@ -1,21 +1,39 @@
+/// <summary>
+/// Controlador de red para el jugador en un juego multijugador utilizando Fusion.
+/// </summary>
 using Fusion;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    public float speed = 5f; // Velocidad de movimiento
+    /// <summary>
+    /// Velocidad de movimiento del jugador.
+    /// </summary>
+    public float speed = 5f;
+
     private Rigidbody2D rb;
 
-    public float upperLimit = 4f; // Límite superior de la cancha
-    public float lowerLimit = -4f; // Límite inferior de la cancha
+    /// <summary>
+    /// Límite superior de movimiento en la cancha.
+    /// </summary>
+    public float upperLimit = 4f;
 
+    /// <summary>
+    /// Límite inferior de movimiento en la cancha.
+    /// </summary>
+    public float lowerLimit = -4f;
+
+    /// <summary>
+    /// Método llamado cuando el objeto es generado en la red.
+    /// </summary>
     public override void Spawned()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// Método que maneja la lógica de movimiento del jugador en cada actualización de la red.
+    /// </summary>
     public override void FixedUpdateNetwork()
     {
         if (rb == null)
