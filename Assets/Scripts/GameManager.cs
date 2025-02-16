@@ -129,9 +129,8 @@ public class GameManager : NetworkBehaviour
 
     public void NewRound()
     {
-        //ball.Spawned();
         CancelInvoke();
-        Invoke(nameof(StartRound), 1f);
+        StartRound();
     }
 
     private void StartRound()
