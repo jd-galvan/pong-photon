@@ -12,7 +12,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private GameObject Line;
     [SerializeField] private GameObject InitWindow;
 
-    private int scoreToWin = 2; 
+    private int scoreToWin = 5; 
     private bool jugadoresListos = false;
     private bool gameOver = false;
 

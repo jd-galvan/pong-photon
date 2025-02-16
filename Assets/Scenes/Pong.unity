@@ -686,7 +686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -113.07994}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 419.9929, y: 188.4792}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &577222916
@@ -733,7 +733,9 @@ MonoBehaviour:
 
 
     Control
-    your paddle with Up and Down arrow keys'
+    your paddle with Up and Down arrow keys
+
+    The first to score 5 points wins'
 --- !u!222 &577222917
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -776,7 +778,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -82.590675}
+  m_AnchoredPosition: {x: 0, y: -77}
   m_SizeDelta: {x: 252.608, y: 92.9768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &616358187
