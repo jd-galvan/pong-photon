@@ -114,12 +114,12 @@ public class GameManager : NetworkBehaviour
         }
         if (player1Score == scoreToWin)
         {
-            matchWonText.text = "Player 1 won";
+            matchWonText.text = "Player 1 won\nPress R to restart (Host)";
             ball.RpcStopBall();
             gameOver = true;
         }
         else if (player2Score == scoreToWin) {
-            matchWonText.text = "Player 2 won";
+            matchWonText.text = "Player 2 won\nPress R to restart (Host)";
             ball.RpcStopBall();
             gameOver = true;
         }
