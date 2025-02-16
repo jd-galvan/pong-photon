@@ -8,25 +8,36 @@ public class BallController : NetworkBehaviour
 
     private Rigidbody2D rb;
 
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcRestartBall()
+    {
+        gameObject.SetActive(true);
+        rb.velocity = Vector2.zero;
+        transform.position = Vector2.zero;
+        LaunchBall();
+    }
+
     public override void Spawned()
     {
         // Llamado cuando el objeto nace en la red
         rb = GetComponent<Rigidbody2D>();
-
-        // Cuando la pelota aparece, inicia el movimiento
-        //LaunchBall();
     }
 
 
     // Función para reiniciar la posición de la pelota
     public void RestartPosition()
     {
+        
         if (Runner.IsServer) // Solo el servidor debe cambiar la posición
         {
-            rb.velocity = Vector2.zero; // Detiene el movimiento actual
-            transform.position = Vector2.zero; // Coloca la bola en el centro
-            LaunchBall(); // Lanza la bola nuevamente
+            //gameObject.SetActive(true);
+            //rb.velocity = Vector2.zero;
+            //transform.position = Vector2.zero;
+            //LaunchBall();
+            RpcRestartBall();
         }
+    
     }
 
     public void LaunchBall()
@@ -37,5 +48,12 @@ public class BallController : NetworkBehaviour
 
         Vector2 initialVelocity = new Vector2(xDirection, yDirection).normalized * initialSpeed;
         rb.velocity = initialVelocity;
+    }
+
+    // RPC para detener la pelota en todos los clientes
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcStopBall()
+    {
+        rb.velocity = Vector2.zero;
     }
 }
