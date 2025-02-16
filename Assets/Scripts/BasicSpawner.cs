@@ -56,7 +56,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
             // Determinar si el jugador es el primer jugador o el segundo
             bool isHost = _spawnedCharacters.Count == 0;
-            float paddleXPosition = isHost ? -screenHalfWidth + 0.5f : screenHalfWidth - 0.5f; // Izquierda para Host, Derecha para Cliente
+            float paddleXPosition = isHost ? -8 : 8; // Izquierda para Host, Derecha para Cliente
 
             // Posición de la paleta
             Vector2 spawnPosition = new Vector2(paddleXPosition, 0);

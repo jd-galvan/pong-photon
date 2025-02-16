@@ -23,7 +23,7 @@ public class PlayerNetwork : NetworkBehaviour
 
         if (GetInput(out NetworkInputData inputData))
         {
-          Debug.Log("Ingreso a este metodo");
+          //Debug.Log("Ingreso a este metodo");
           // Movimiento en el eje Y (Solo hacia arriba y abajo)
           Vector2 movement = new Vector2(0, inputData.moveDirection.y * speed);
           rb.velocity = movement;

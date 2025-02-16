@@ -215,10 +215,18 @@ MonoBehaviour:
   scoreTrigger:
     m_PersistentCalls:
       m_Calls:
-      - {m_Target: {fileID: 417150622}, m_TargetAssemblyTypeName: , m_MethodName: OnComputerScored, m_Mode: 1, m_Arguments: {m_ObjectArgument: {fileID: 0},
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, m_IntArgument: 0,
-          m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 0}, m_CallState: 2}
-    m_CallsDirty: 1
+      - m_Target: {fileID: 417150622}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnPlayer2Scored
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &109502785
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +285,7 @@ GameObject:
   - component: {fileID: 228497189}
   - component: {fileID: 228497188}
   m_Layer: 5
-  m_Name: Player Score
+  m_Name: Player1Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -489,6 +497,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 417150623}
+  - component: {fileID: 417150624}
   - component: {fileID: 417150622}
   m_Layer: 0
   m_Name: Game Manager
@@ -496,7 +505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &417150622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,13 +518,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7edbdfc9c8b1e94897bb20e672f8881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  playerPaddle: {fileID: 0}
-  computerPaddle: {fileID: 0}
-  playerScoreText: {fileID: 228497188}
-  computerScoreText: {fileID: 618610096}
-  playerScore: 0
-  computerScore: 0
+  ball: {fileID: 702247808}
+  player1ScoreText: {fileID: 228497188}
+  player2ScoreText: {fileID: 618610096}
 --- !u!4 &417150623
 Transform:
   m_ObjectHideFlags: 0
@@ -531,6 +536,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &417150624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417150621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3716619395
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 417150622}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +659,7 @@ GameObject:
   - component: {fileID: 618610097}
   - component: {fileID: 618610096}
   m_Layer: 5
-  m_Name: Computer Score
+  m_Name: Player2Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -716,6 +740,7 @@ GameObject:
   - component: {fileID: 702247806}
   - component: {fileID: 702247808}
   - component: {fileID: 702247807}
+  - component: {fileID: 702247809}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -880,6 +905,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 702247808}
+  - {fileID: 702247809}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &702247808
 MonoBehaviour:
@@ -894,6 +920,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialSpeed: 5
+--- !u!114 &702247809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702247801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0.15
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!850595691 &732219383
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1051,10 +1094,18 @@ MonoBehaviour:
   scoreTrigger:
     m_PersistentCalls:
       m_Calls:
-      - {m_Target: {fileID: 417150622}, m_TargetAssemblyTypeName: , m_MethodName: OnPlayerScored, m_Mode: 1, m_Arguments: {m_ObjectArgument: {fileID: 0},
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, m_IntArgument: 0,
-          m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 0}, m_CallState: 2}
-    m_CallsDirty: 1
+      - m_Target: {fileID: 417150622}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnPlayer1Scored
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1237810576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,7 +1197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceType: 0
-  bounceStrength: 0.05
+  bounceStrength: 0
 --- !u!1 &1327430166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,7 +1357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceType: 0
-  bounceStrength: 0.05
+  bounceStrength: 0
 --- !u!1 &1635559012
 GameObject:
   m_ObjectHideFlags: 0
